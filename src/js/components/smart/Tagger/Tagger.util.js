@@ -11,7 +11,6 @@ class TaggerUtil {
       base64Url,
     };
 
-    console.log('Uploading...');
     fetch(AppConstants.SEVER_URL + AppConstants.SERVER_ROUTE.POST.IMAGE, {
       method: 'POST',
       headers: {
@@ -37,7 +36,6 @@ class TaggerUtil {
     }).then(res => res.json())
       .then((resJson) => {
         const { records } = resJson;
-        console.log(resJson.records);
         records.forEach((record, idx) => {
           records[idx].key = idx;
         });
