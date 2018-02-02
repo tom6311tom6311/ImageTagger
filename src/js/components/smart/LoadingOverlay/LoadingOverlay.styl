@@ -1,0 +1,25 @@
+.loadingOverlay
+  position:fixed
+  z-index: 1
+  top: 0
+  left: 0
+  background-color: rgba(0,0,0, 0.2)
+  overflow-x: hidden
+  transition: opacity 1s
+  height: 100%
+  width: 100%
+
+  &Open
+    display: block
+    opacity: 1
+
+  &Close
+    display: none
+    opacity: 0
+
+  &Image
+    display: block
+    position: relative
+    top: 38%
+    margin: auto
+    height: 24%

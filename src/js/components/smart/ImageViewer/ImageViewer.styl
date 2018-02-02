@@ -1,0 +1,47 @@
+.imageViewer
+  position:fixed
+  z-index: 1
+  top: 0
+  left: 0
+  background-color: rgba(0,0,0, 0.9)
+  overflow-x: hidden
+  transition: 0.5s
+  height: 100%
+
+  &Open
+    width: 100%
+
+  &Close
+    width: 0%
+
+  &CloseButton
+    position: absolute
+    top: 20px
+    right: 45px
+    color: #e9ece5
+    font-size: 60px
+    background: none
+    border: none
+
+  &Block
+    display: block
+    position: relative
+    top: 18%
+    margin: auto
+    height: 64%
+
+    &Image
+      display: inline-block
+      vertical-align: middle
+      width: 40%
+      padding: 0 5%
+
+    &Concepts
+      display: inline-block
+      vertical-align: middle
+      width: 40%
+      padding: 0 5%
+      color: #e9ece5
+
+      & > table
+        width: 100%
