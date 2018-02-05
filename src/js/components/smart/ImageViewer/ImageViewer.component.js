@@ -7,6 +7,7 @@ require('./ImageViewer.styl');
 
 const ImageViewer = (props) => {
   const {
+    isTagger,
     image,
     onClose,
   } = props;
@@ -30,7 +31,11 @@ const ImageViewer = (props) => {
       <div className="imageViewerBlock">
         <img
           className="imageViewerBlockImage"
-          src={AppConstants.SEVER_URL + AppConstants.SERVER_ROUTE.GET.IMAGES + image.name}
+          src={AppConstants.SEVER_URL + (
+            isTagger ?
+            AppConstants.SERVER_ROUTE.GET.IMAGES.TAGGER :
+            AppConstants.SERVER_ROUTE.GET.IMAGES.FACE
+          ) + image.name}
           alt="Nothing"
         />
         <div className="imageViewerBlockConcepts">
@@ -47,6 +52,7 @@ const ImageViewer = (props) => {
 };
 
 ImageViewer.propTypes = {
+  isTagger: PropTypes.bool,
   image: PropTypes.shape({
     name: PropTypes.string,
     concepts: PropTypes.arrayOf(PropTypes.shape({
@@ -58,6 +64,7 @@ ImageViewer.propTypes = {
 };
 
 ImageViewer.defaultProps = {
+  isTagger: true,
   image: {},
   onClose: () => {},
 };

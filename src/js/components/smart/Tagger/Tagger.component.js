@@ -3,7 +3,7 @@ import ImageSelector from '../ImageSelector/ImageSelector.component';
 import ImageList from '../ImageList/ImageList.component';
 import ImageViewer from '../ImageViewer/ImageViewer.component';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay.component';
-import TaggerUtil from '../Tagger/Tagger.util';
+import FetchUtil from '../../../util/Fetch.util';
 import AppConstants from '../../../constant/App.constant';
 
 require('./Tagger.styl');
@@ -25,7 +25,7 @@ class Tagger extends React.Component {
   }
 
   componentDidMount() {
-    TaggerUtil.getImageArr((imageArr) => {
+    FetchUtil.getImageArr(true, (imageArr) => {
       this.setState({
         imageArr,
       });
@@ -38,18 +38,25 @@ class Tagger extends React.Component {
       return;
     }
     this.toggleLoadingOverlay(true);
-    TaggerUtil.uploadImage(
+    FetchUtil.uploadImage(
+      true,
       this.state.currImageFile.name,
       this.state.currImageBase64Url,
       () => {
-        this.toggleLoadingOverlay(false);
-        TaggerUtil.getImageArr((imageArr) => {
+        FetchUtil.getImageArr(true, (imageArr) => {
           this.setState({
             imageArr,
           });
+          this.onViewImageDetail(null, imageArr.length - 1);
+          this.toggleLoadingOverlay(false);
         });
       },
     );
+    setTimeout(() => {
+      if (this.state.isLoading) {
+        this.toggleLoadingOverlay(false);
+      }
+    }, AppConstants.MAX_LOADING_TIME);
   }
 
   onImageChange(e) {
@@ -69,7 +76,9 @@ class Tagger extends React.Component {
   }
 
   onViewImageDetail(e, id) {
-    e.preventDefault();
+    if (e !== null) {
+      e.preventDefault();
+    }
     this.setState({
       currViewingImageId: id,
     });
@@ -105,9 +114,11 @@ class Tagger extends React.Component {
         />
         <ImageList
           imageArr={imageArr}
+          urlPrefix={AppConstants.SEVER_URL + AppConstants.SERVER_ROUTE.GET.IMAGES.TAGGER}
           onViewImageDetail={this.onViewImageDetail}
         />
         <ImageViewer
+          isTagger
           image={imageArr[currViewingImageId]}
           onClose={this.onClosePreviewer}
         />

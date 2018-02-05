@@ -1,7 +1,7 @@
-import AppConstants from '../../../constant/App.constant';
+import AppConstants from '../constant/App.constant';
 
-class TaggerUtil {
-  static uploadImage(name, base64Url, callback) {
+class FetchUtil {
+  static uploadImage(isTagger, name, base64Url, callback) {
     if (typeof name === 'undefined') {
       return;
     }
@@ -11,7 +11,9 @@ class TaggerUtil {
       base64Url,
     };
 
-    fetch(AppConstants.SEVER_URL + AppConstants.SERVER_ROUTE.POST.IMAGE, {
+    fetch(AppConstants.SEVER_URL + (isTagger ?
+      AppConstants.SERVER_ROUTE.POST.IMAGE.TAGGER :
+      AppConstants.SERVER_ROUTE.POST.IMAGE.FACE), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,8 +29,10 @@ class TaggerUtil {
       });
   }
 
-  static getImageArr(callback) {
-    fetch(AppConstants.SEVER_URL + AppConstants.SERVER_ROUTE.GET.RECORDS, {
+  static getImageArr(isTagger, callback) {
+    fetch(AppConstants.SEVER_URL + (isTagger ?
+      AppConstants.SERVER_ROUTE.GET.RECORDS.TAGGER :
+      AppConstants.SERVER_ROUTE.GET.RECORDS.FACE), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -47,4 +51,4 @@ class TaggerUtil {
   }
 }
 
-export default TaggerUtil;
+export default FetchUtil;

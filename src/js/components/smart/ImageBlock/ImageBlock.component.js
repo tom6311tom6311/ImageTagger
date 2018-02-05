@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppConstants from '../../../constant/App.constant';
 
 require('./ImageBlock.styl');
 
 const ImageBlock = (props) => {
   const {
     name,
+    urlPrefix,
     onImageClick,
   } = props;
 
@@ -16,7 +16,7 @@ const ImageBlock = (props) => {
       onClick={e => onImageClick && onImageClick(e)}
     >
       <img
-        src={AppConstants.SEVER_URL + AppConstants.SERVER_ROUTE.GET.IMAGES + name}
+        src={urlPrefix + name}
         alt="Nothing"
       />
     </button>
@@ -25,11 +25,13 @@ const ImageBlock = (props) => {
 
 ImageBlock.propTypes = {
   name: PropTypes.string,
+  urlPrefix: PropTypes.string,
   onImageClick: PropTypes.func,
 };
 
 ImageBlock.defaultProps = {
   name: '',
+  urlPrefix: '',
   onImageClick: () => {},
 };
 
