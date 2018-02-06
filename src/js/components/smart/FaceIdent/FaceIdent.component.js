@@ -47,9 +47,16 @@ class FaceIdent extends React.Component {
           this.setState({
             imageArr,
           });
+          this.onViewImageDetail(null, imageArr.length - 1);
+          this.toggleLoadingOverlay(false);
         });
       },
     );
+    setTimeout(() => {
+      if (this.state.isLoading) {
+        this.toggleLoadingOverlay(false);
+      }
+    }, AppConstants.MAX_LOADING_TIME);
   }
 
   onImageChange(e) {
@@ -69,7 +76,9 @@ class FaceIdent extends React.Component {
   }
 
   onViewImageDetail(e, id) {
-    e.preventDefault();
+    if (e !== null) {
+      e.preventDefault();
+    }
     this.setState({
       currViewingImageId: id,
     });
@@ -109,6 +118,7 @@ class FaceIdent extends React.Component {
           onViewImageDetail={this.onViewImageDetail}
         />
         <ImageViewer
+          isTagger={false}
           image={imageArr[currViewingImageId]}
           onClose={this.onClosePreviewer}
         />
