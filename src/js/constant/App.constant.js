@@ -19,19 +19,6 @@ const AppConstants = {
     },
   },
   TEXT_UPLOADING: 'Uploading',
-  API_URL: {
-    AZURE: {
-      FACE_DETECT: 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect',
-    },
-  },
-  API_KEY: {
-    AZURE: {
-      FACE_DETECT: [
-        'f2810df90a854650bd4a7d148f708198',
-        'b7c2af713a8b4b4f816532ee2facff11',
-      ],
-    },
-  },
   MAX_LOADING_TIME: 10000,
 };
 
