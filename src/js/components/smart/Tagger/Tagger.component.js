@@ -3,6 +3,7 @@ import ImageSelector from '../ImageSelector/ImageSelector.component';
 import ImageList from '../ImageList/ImageList.component';
 import ImageViewer from '../ImageViewer/ImageViewer.component';
 import LoadingOverlay from '../LoadingOverlay/LoadingOverlay.component';
+import Toast from '../Toast/Toast.component';
 import FetchUtil from '../../../util/Fetch.util';
 import AppConstants from '../../../constant/App.constant';
 
@@ -16,11 +17,13 @@ class Tagger extends React.Component {
       currImageBase64Url: '',
       imageArr: [],
       currViewingImageId: -1,
+      toastMessage: '',
     };
     this.onImageSubmit = this.onImageSubmit.bind(this);
     this.onImageChange = this.onImageChange.bind(this);
     this.onViewImageDetail = this.onViewImageDetail.bind(this);
     this.onClosePreviewer = this.onClosePreviewer.bind(this);
+    this.onConnectionTimeout = this.onConnectionTimeout.bind(this);
     this.toggleLoadingOverlay = this.toggleLoadingOverlay.bind(this);
   }
 
@@ -55,6 +58,7 @@ class Tagger extends React.Component {
     setTimeout(() => {
       if (this.state.isLoading) {
         this.toggleLoadingOverlay(false);
+        this.onConnectionTimeout();
       }
     }, AppConstants.MAX_LOADING_TIME);
   }
@@ -91,6 +95,17 @@ class Tagger extends React.Component {
     });
   }
 
+  onConnectionTimeout() {
+    this.setState({
+      toastMessage: '伺服器出了點狀況...',
+    });
+    setTimeout(() => {
+      this.setState({
+        toastMessage: '',
+      });
+    }, AppConstants.TOAST_DURATION);
+  }
+
   toggleLoadingOverlay(isLoading) {
     this.setState({
       isLoading,
@@ -103,6 +118,7 @@ class Tagger extends React.Component {
       imageArr,
       currViewingImageId,
       isLoading,
+      toastMessage,
     } = this.state;
 
     return (
@@ -125,6 +141,9 @@ class Tagger extends React.Component {
         <LoadingOverlay
           isLoading={isLoading}
           loadingText={AppConstants.TEXT_UPLOADING}
+        />
+        <Toast
+          message={toastMessage}
         />
       </div>
     );

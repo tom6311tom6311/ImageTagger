@@ -1,15 +1,19 @@
 import AppConstants from '../constant/App.constant';
 
 class FetchUtil {
-  static uploadImage(isTagger, name, base64Url, callback) {
-    if (typeof name === 'undefined') {
+  static uploadImage(isTagger, fileName, base64Url, callback, name) {
+    if (typeof fileName === 'undefined') {
       return;
     }
 
     const img = {
-      name,
+      fileName,
       base64Url,
     };
+
+    if (!isTagger && name) {
+      img.name = name;
+    }
 
     fetch(AppConstants.SEVER_URL + (isTagger ?
       AppConstants.SERVER_ROUTE.POST.IMAGE.TAGGER :
@@ -22,7 +26,7 @@ class FetchUtil {
     }).then(res => res.json())
       .then((resJson) => {
         console.log(resJson);
-        callback();
+        callback(resJson);
       })
       .catch((err) => {
         console.error(err);

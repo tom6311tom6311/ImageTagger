@@ -19,7 +19,8 @@ const AppConstants = {
     },
   },
   TEXT_UPLOADING: 'Uploading',
-  MAX_LOADING_TIME: 10000,
+  MAX_LOADING_TIME: 15000,
+  TOAST_DURATION: 3000,
 };
 
 export default AppConstants;

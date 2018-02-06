@@ -20,7 +20,10 @@ const ConceptRow = (props) => {
 ConceptRow.propTypes = {
   concept: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
   }),
 };
 
